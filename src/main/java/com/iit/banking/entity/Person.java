@@ -5,9 +5,9 @@ import jakarta.persistence.MappedSuperclass;
 @MappedSuperclass
 public abstract class Person {
 
-    private String name;
-    private String email;
-    private String password;
+    protected String name;
+    protected String email;
+    protected String password;
 
     public String getName() {
         return name;
@@ -31,6 +31,15 @@ public abstract class Person {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public Person(String name, String email, String password) {
+        this.name = name;
+        this.email = email;
+        this.password = password;
+    }
+
+    public Person() {
     }
 
 }
