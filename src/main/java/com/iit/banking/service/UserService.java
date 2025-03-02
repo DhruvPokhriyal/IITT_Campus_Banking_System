@@ -6,8 +6,10 @@ import java.util.Optional;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.iit.banking.dto.PasswordUpdateDTO;
 import com.iit.banking.dto.UserDTO;
 import com.iit.banking.dto.UserRequestDTO;
+import com.iit.banking.dto.UserUpdateDTO;
 import com.iit.banking.model.entity.Account;
 import com.iit.banking.model.entity.User;
 import com.iit.banking.repository.AccountRepository;
@@ -55,5 +57,27 @@ public class UserService {
     public UserDTO getUserById(Long id) {
         User user = userRepository.findById(id).orElse(null);
         return new UserDTO(user);
+    }
+
+    public UserDTO getUserByEmail(String email) {
+        User user = userRepository.findByEmail(email);
+        return new UserDTO(user);
+    }
+
+    @Transactional
+    public void updateName(UserUpdateDTO userUpdate) {
+        User user = userRepository.findByEmail(userUpdate.getEmail());
+        user.setName(userUpdate.getName());
+        userRepository.save(user);
+    }
+
+    @Transactional
+    public void updatePassword(PasswordUpdateDTO passwordUpdate) {
+        User user = userRepository.findByEmail(passwordUpdate.getEmail());
+        if (!passwordEncoder.matches(passwordUpdate.getOldPassword(), user.getPassword())) {
+            throw new Error("Old password is incorrect");
+        }
+        user.setPassword(passwordEncoder.encode(passwordUpdate.getNewPassword()));
+        userRepository.save(user);
     }
 }
