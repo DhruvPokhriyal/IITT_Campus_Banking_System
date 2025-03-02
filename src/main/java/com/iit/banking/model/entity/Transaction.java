@@ -28,7 +28,7 @@ public class Transaction {
     public Transaction() {
     }
 
-    public Transaction(String transactionType, Double amount, String description, Account account) {
+    public Transaction(String transactionType, Double amount, String description, Account account, Account to) {
         this.transactionType = transactionType;
         this.amount = amount;
         this.description = description;
@@ -65,6 +65,14 @@ public class Transaction {
 
     public LocalDateTime getTimestamp() {
         return timestamp;
+    }
+
+    public Account getAccount() {
+        return account;
+    }
+
+    public void setAccount(Account account) {
+        this.account = account;
     }
 
     @Override
