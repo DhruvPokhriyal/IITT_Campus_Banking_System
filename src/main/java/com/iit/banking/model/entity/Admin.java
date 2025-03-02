@@ -2,6 +2,8 @@ package com.iit.banking.model.entity;
 
 import java.util.Objects;
 
+import com.iit.banking.model.base.Person;
+
 import jakarta.persistence.*;
 
 @Entity
