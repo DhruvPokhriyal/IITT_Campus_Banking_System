@@ -51,4 +51,9 @@ public class UserService {
         List<UserDTO> userDTOs = userRepository.findAll().stream().map(UserDTO::new).toList();
         return userDTOs;
     }
+
+    public UserDTO getUserById(Long id) {
+        User user = userRepository.findById(id).orElse(null);
+        return new UserDTO(user);
+    }
 }
