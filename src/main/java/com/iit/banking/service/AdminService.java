@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.iit.banking.dto.AdminDTO;
 import com.iit.banking.dto.TransactionDTO;
 import com.iit.banking.dto.UserDTO;
 import com.iit.banking.model.entity.Account;
@@ -29,6 +30,11 @@ public class AdminService {
         this.userRepository = userRepository;
         this.transactionRepository = transactionRepository;
         this.passwordEncoder = passwordEncoder;
+    }
+
+    public List<AdminDTO> getAllAdmins() {
+        List<AdminDTO> adminDTOs = adminRepository.findAll().stream().map(AdminDTO::new).toList();
+        return adminDTOs;
     }
 
     public List<UserDTO> getAllUsers() {
