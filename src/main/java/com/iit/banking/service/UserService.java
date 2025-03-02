@@ -1,5 +1,6 @@
 package com.iit.banking.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -44,5 +45,10 @@ public class UserService {
         account.setUser(savedUser);
         accountRepository.save(account);
         return new UserDTO(savedUser);
+    }
+
+    public List<UserDTO> getAllUsers() {
+        List<UserDTO> userDTOs = userRepository.findAll().stream().map(UserDTO::new).toList();
+        return userDTOs;
     }
 }
