@@ -35,6 +35,10 @@ public class Transaction {
         this.account = account;
     }
 
+    public Long getId() {
+        return id;
+    }
+
     public String getTransactionType() {
         return transactionType;
     }
@@ -57,6 +61,10 @@ public class Transaction {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public LocalDateTime getTimestamp() {
+        return timestamp;
     }
 
     @Override
