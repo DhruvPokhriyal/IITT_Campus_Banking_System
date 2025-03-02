@@ -21,18 +21,38 @@ public class Transaction {
     private LocalDateTime timestamp = LocalDateTime.now();
 
     @ManyToOne
-    @Column(nullable = false)
-    @JoinColumn(name = "account_id", nullable = false)
-    private Account account;
+    @JoinColumn(name = "sender_account_id", referencedColumnName = "id", nullable = true)
+    private Account sender;
+
+    @ManyToOne
+    @JoinColumn(name = "receiver_account_id", referencedColumnName = "id", nullable = true)
+    private Account receiver;
 
     public Transaction() {
     }
 
-    public Transaction(String transactionType, Double amount, String description, Account account, Account to) {
+    public Transaction(String transactionType, Double amount, String description, Account sender, Account receiver) {
         this.transactionType = transactionType;
         this.amount = amount;
         this.description = description;
-        this.account = account;
+        this.sender = sender;
+        this.receiver = receiver;
+    }
+
+    public Account getSender() {
+        return sender;
+    }
+
+    public void setSender(Account sender) {
+        this.sender = sender;
+    }
+
+    public Account getReceiver() {
+        return receiver;
+    }
+
+    public void setReceiver(Account receiver) {
+        this.receiver = receiver;
     }
 
     public Long getId() {
@@ -65,25 +85,6 @@ public class Transaction {
 
     public LocalDateTime getTimestamp() {
         return timestamp;
-    }
-
-    public Account getAccount() {
-        return account;
-    }
-
-    public void setAccount(Account account) {
-        this.account = account;
-    }
-
-    @Override
-    public String toString() {
-        return "Transaction{" +
-                "id=" + id +
-                ", transactionType='" + transactionType + '\'' +
-                ", amount=" + amount +
-                ", description='" + description + '\'' +
-                ", timestamp=" + timestamp +
-                '}';
     }
 
     @Override
