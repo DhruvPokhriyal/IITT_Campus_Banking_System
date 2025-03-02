@@ -18,6 +18,9 @@ public class Account {
     @OneToOne
     private User user;
 
+    @OneToMany(mappedBy = "account", cascade = CascadeType.ALL)
+    private java.util.List<Transaction> transactions;
+
     public Account() {
     }
 
