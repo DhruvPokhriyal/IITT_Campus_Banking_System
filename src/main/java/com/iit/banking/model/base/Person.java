@@ -1,12 +1,16 @@
 package com.iit.banking.model.base;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.MappedSuperclass;
 
 @MappedSuperclass
 public abstract class Person {
 
     protected String name;
+
+    @Column(unique = true)
     protected String email;
+
     protected String password;
 
     public String getName() {
