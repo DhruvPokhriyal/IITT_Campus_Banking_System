@@ -30,6 +30,10 @@ public class Account {
         this.user = user;
     }
 
+    public Long getId() {
+        return id;
+    }
+
     public String getAccountNumber() {
         return accountNumber;
     }
