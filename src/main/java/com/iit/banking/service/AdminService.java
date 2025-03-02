@@ -54,10 +54,10 @@ public class AdminService {
     @Transactional
     public TransactionDTO reverseTransaction(Transaction transaction) {
         if (transaction.getTransactionType().equals("Deposit")) {
-            Account userAccount = transaction.getAccount();
+            Account userAccount = transaction.getSender();
             userAccount.setBalance(userAccount.getBalance() + transaction.getAmount());
         } else if (transaction.getTransactionType().equals("Withdraw")) {
-            Account userAccount = transaction.getAccount();
+            Account userAccount = transaction.getSender();
             userAccount.setBalance(userAccount.getBalance() - transaction.getAmount());
         } else if (transaction.getTransactionType().equals("Transfer")) {
             throw new Error("Cannot reverse transferred amount");

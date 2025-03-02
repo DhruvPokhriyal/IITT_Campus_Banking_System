@@ -10,6 +10,8 @@ public class TransactionDTO {
     private Double amount;
     private String description;
     private LocalDateTime timestamp;
+    private Long senderId;
+    private Long receiverId;
 
     public TransactionDTO(Transaction transaction) {
         this.id = transaction.getId();
@@ -17,6 +19,8 @@ public class TransactionDTO {
         this.amount = transaction.getAmount();
         this.description = transaction.getDescription();
         this.timestamp = transaction.getTimestamp();
+        this.senderId = transaction.getSender().getId();
+        this.receiverId = transaction.getReceiver().getId();
     }
 
     public Long getId() {
@@ -39,6 +43,14 @@ public class TransactionDTO {
         return timestamp;
     }
 
+    public Long getSenderId() {
+        return senderId;
+    }
+
+    public Long getReceiverId() {
+        return receiverId;
+    }
+
     @Override
     public String toString() {
         return "TransactionDTO{" +
@@ -47,6 +59,8 @@ public class TransactionDTO {
                 ", amount=" + amount +
                 ", description='" + description + '\'' +
                 ", timestamp=" + timestamp +
+                ", senderId=" + senderId +
+                ", receiverId=" + receiverId +
                 '}';
     }
 
