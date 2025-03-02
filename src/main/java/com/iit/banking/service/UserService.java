@@ -80,4 +80,9 @@ public class UserService {
         user.setPassword(passwordEncoder.encode(passwordUpdate.getNewPassword()));
         userRepository.save(user);
     }
+
+    @Transactional
+    public void deleteUser(UserDTO user) {
+        userRepository.deleteByEmail(user.getEmail());
+    }
 }
