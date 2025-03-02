@@ -17,6 +17,10 @@ public class User extends Person {
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private Account account;
 
+    public Long getId() {
+        return id;
+    }
+
     public User() {
     }
 
@@ -46,7 +50,6 @@ public class User extends Person {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", email='" + email + '\'' +
-                ", password='" + password + '\'' +
                 '}';
     }
 
