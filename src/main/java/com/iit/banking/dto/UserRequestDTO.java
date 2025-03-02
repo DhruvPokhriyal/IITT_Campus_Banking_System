@@ -9,6 +9,19 @@ public class UserRequestDTO {
     private String accountNumber;
     private Double balance;
 
+    public UserRequestDTO() {
+    }
+
+    public UserRequestDTO(String name, String email, String password, String confirmPassword, String accountNumber,
+            Double balance) {
+        this.name = name;
+        this.email = email;
+        this.password = password;
+        this.confirmPassword = confirmPassword;
+        this.accountNumber = accountNumber;
+        this.balance = balance;
+    }
+
     public String getName() {
         return name;
     }
