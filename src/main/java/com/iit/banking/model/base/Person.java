@@ -1,4 +1,4 @@
-package com.iit.banking.entity;
+package com.iit.banking.model.base;
 
 import jakarta.persistence.MappedSuperclass;
 

@@ -1,4 +1,4 @@
-package com.iit.banking.entity;
+package com.iit.banking.model.entity;
 
 import java.util.Objects;
 
