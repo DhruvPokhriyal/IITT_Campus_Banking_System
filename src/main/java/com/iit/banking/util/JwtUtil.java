@@ -11,7 +11,7 @@ import io.jsonwebtoken.security.Keys;
 
 @Component
 public class JwtUtil {
-    private final String secretKey = "sifos214151ww1@sifsdfmsidfoisnfisndofisodifjsijfoisdf#";
+    private final String secretKey = "orgkpspbsijr0f9j2039j02e01i2-31240988)*_)!_)@($_!)(#@&Y91FNKDFJNAEJNDOAIWJD0J02J10R01IJFIAJSDIJAOWIDJOAIWJDOUABSRGUYIWJDPIKAJ1293I0)";
     private final long tokenExpirationTime = 1000 * 60 * 60;
 
     private Key getSecretKey() {
