@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import com.iit.banking.dto.LoginRequestDTO;
 import com.iit.banking.dto.LoginResponseDTO;
+import com.iit.banking.model.entity.User;
 import com.iit.banking.repository.UserRepository;
 import com.iit.banking.util.JwtUtil;
 
@@ -22,5 +23,10 @@ public class AuthService {
 
     public LoginResponseDTO login(LoginRequestDTO loginRequest) {
         User user = userRepository.findByEmail(loginRequest.getEmail());
+        if (user == null || !passwordEncoder.matches(loginRequest.getPassword(), user.getPassword())) {
+            throw new Error("Invalid email or password");
+        }
+        String token = jwtUtil.generateToken(user.getEmail());
+        return new LoginResponseDTO(token);
     }
 }
