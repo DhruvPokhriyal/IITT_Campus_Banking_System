@@ -1,0 +1,167 @@
+/* Root styles */
+.root {
+    -fx-font-family: "Segoe UI", Arial, sans-serif;
+    -fx-background-color: #f5f5f5;
+}
+
+/* Login container */
+.login-container {
+    -fx-background-color: white;
+    -fx-background-radius: 10;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 10, 0, 0, 0);
+    -fx-padding: 40;
+    -fx-spacing: 20;
+}
+
+/* Title label */
+.title-label {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2196f3;
+}
+
+/* Form container */
+.form-container {
+    -fx-spacing: 15;
+    -fx-padding: 20;
+}
+
+/* Input fields */
+.input-field {
+    -fx-background-color: #f5f5f5;
+    -fx-background-radius: 5;
+    -fx-border-color: #e0e0e0;
+    -fx-border-radius: 5;
+    -fx-padding: 10;
+    -fx-font-size: 14px;
+}
+
+.input-field:focused {
+    -fx-border-color: #2196f3;
+    -fx-border-width: 2;
+}
+
+/* Primary button */
+.primary-button {
+    -fx-background-color: #2196f3;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-padding: 12;
+    -fx-background-radius: 5;
+    -fx-cursor: hand;
+}
+
+.primary-button:hover {
+    -fx-background-color: #1976d2;
+}
+
+.primary-button:pressed {
+    -fx-background-color: #1565c0;
+}
+
+/* Hyperlink */
+.hyperlink {
+    -fx-text-fill: #2196f3;
+    -fx-font-size: 14px;
+}
+
+.hyperlink:hover {
+    -fx-text-fill: #1976d2;
+}
+
+/* Footer */
+.footer {
+    -fx-padding: 20 0 0 0;
+    -fx-spacing: 5;
+}
+
+.footer-text {
+    -fx-text-fill: #757575;
+    -fx-font-size: 12px;
+}
+
+/* Checkbox */
+.check-box {
+    -fx-font-size: 14px;
+}
+
+.check-box .box {
+    -fx-background-color: #f5f5f5;
+    -fx-border-color: #e0e0e0;
+    -fx-border-radius: 3;
+}
+
+.check-box:selected .box {
+    -fx-background-color: #2196f3;
+    -fx-border-color: #2196f3;
+}
+
+/* Alert dialog */
+.dialog-pane {
+    -fx-background-color: white;
+}
+
+.dialog-pane .header-panel {
+    -fx-background-color: #f5f5f5;
+}
+
+.dialog-pane .content {
+    -fx-padding: 20;
+}
+
+.dialog-pane .button-panel {
+    -fx-padding: 10;
+}
+
+.dialog-pane .button {
+    -fx-background-color: #2196f3;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-padding: 8 16;
+    -fx-background-radius: 5;
+    -fx-cursor: hand;
+}
+
+.dialog-pane .button:hover {
+    -fx-background-color: #1976d2;
+}
+
+/* Dark mode support */
+.dark-mode {
+    -fx-background-color: #121212;
+}
+
+.dark-mode .login-container {
+    -fx-background-color: #1e1e1e;
+}
+
+.dark-mode .title-label {
+    -fx-text-fill: #64b5f6;
+}
+
+.dark-mode .input-field {
+    -fx-background-color: #2d2d2d;
+    -fx-border-color: #404040;
+    -fx-text-fill: white;
+}
+
+.dark-mode .input-field:focused {
+    -fx-border-color: #64b5f6;
+}
+
+.dark-mode .footer-text {
+    -fx-text-fill: #b0b0b0;
+}
+
+.dark-mode .dialog-pane {
+    -fx-background-color: #1e1e1e;
+}
+
+.dark-mode .dialog-pane .header-panel {
+    -fx-background-color: #2d2d2d;
+}
+
+.dark-mode .dialog-pane .content {
+    -fx-text-fill: white;
+}

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.Insets?>
+
+<VBox alignment="CENTER" spacing="20" styleClass="dialog-container">
+    <padding>
+        <Insets top="20" right="20" bottom="20" left="20"/>
+    </padding>
+
+    <Label text="Transfer Money" styleClass="dialog-title"/>
+
+    <VBox spacing="10" styleClass="form-container">
+        <Label text="Recipient Account Number:" styleClass="form-label"/>
+        <TextField fx:id="recipientAccountField" promptText="Enter recipient's account number" styleClass="form-field"/>
+
+        <Label text="Amount:" styleClass="form-label"/>
+        <TextField fx:id="amountField" promptText="Enter amount to transfer" styleClass="form-field"/>
+
+        <Label text="Description (Optional):" styleClass="form-label"/>
+        <TextField fx:id="descriptionField" promptText="Enter transfer description" styleClass="form-field"/>
+    </VBox>
+
+    <HBox spacing="10" alignment="CENTER_RIGHT">
+        <Button text="Cancel" onAction="#handleCancel" styleClass="secondary-button"/>
+        <Button text="Transfer" onAction="#handleTransfer" styleClass="primary-button"/>
+    </HBox>
+</VBox> 

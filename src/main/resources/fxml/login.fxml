@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.geometry.Insets?>
+
+<VBox alignment="CENTER" spacing="20" styleClass="login-container" xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml" fx:controller="com.iit.banking.ui.controller.LoginController">
+    
+    <padding>
+        <Insets top="40" right="40" bottom="40" left="40"/>
+    </padding>
+
+    <!-- Temporarily commented out until logo is available
+    <ImageView fitWidth="120" fitHeight="120" preserveRatio="true">
+        <Image url="@/images/logo.png"/>
+    </ImageView>
+    -->
+
+    <Label text="IIT Campus Banking System" styleClass="title-label"/>
+
+    <VBox spacing="15" styleClass="form-container">
+        <TextField fx:id="emailField" promptText="Email" styleClass="input-field"/>
+        <PasswordField fx:id="passwordField" promptText="Password" styleClass="input-field"/>
+        
+        <HBox spacing="10" alignment="CENTER_RIGHT">
+            <CheckBox fx:id="rememberMeCheck" text="Remember me"/>
+            <Hyperlink text="Forgot Password?" styleClass="hyperlink"/>
+        </HBox>
+
+        <Button text="Login" onAction="#handleLogin" styleClass="primary-button"/>
+        
+        <HBox spacing="5" alignment="CENTER">
+            <Label text="Don't have an account?"/>
+            <Hyperlink text="Sign Up" onAction="#handleSignUp" styleClass="hyperlink"/>
+        </HBox>
+    </VBox>
+
+    <VBox spacing="5" alignment="CENTER" styleClass="footer">
+        <Label text="© 2024 IIT Campus Banking System" styleClass="footer-text"/>
+        <Label text="Contact: dhruvpokhriyaltech@gmail.com" styleClass="footer-text"/>
+    </VBox>
+</VBox> 
