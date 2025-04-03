@@ -8,5 +8,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import com.iit.banking.model.entity.Transaction;
 
 public interface TransactionRepository extends JpaRepository<Transaction, Long> {
-    List<Transaction> findBySenderOrReceiverId(Long senderId, Long receiverId);
+    List<Transaction> findBySender_IdOrReceiver_Id(Long senderId, Long receiverId);
 }

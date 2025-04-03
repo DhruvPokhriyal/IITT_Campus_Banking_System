@@ -23,7 +23,8 @@ public class TransactionService {
     }
 
     public List<TransactionDTO> getAllTransactionsByAccountId(Long accountId) {
-        return transactionRepository.findBySenderOrReceiverId(accountId, accountId).stream().map(TransactionDTO::new)
+        return transactionRepository.findBySender_IdOrReceiver_Id(accountId, accountId).stream()
+                .map(TransactionDTO::new)
                 .toList();
     }
 
@@ -32,7 +33,7 @@ public class TransactionService {
         Account account = accountRepository.findById(accountId).orElseThrow();
         account.setBalance(account.getBalance() + amount);
         accountRepository.save(account);
-        Transaction transaction = new Transaction("Deposit", amount, null, null, account);
+        Transaction transaction = new Transaction("Deposit", amount, "Deposit to account", null, account);
         Transaction savedTransaction = transactionRepository.save(transaction);
         return new TransactionDTO(savedTransaction);
     }
@@ -45,7 +46,7 @@ public class TransactionService {
         }
         account.setBalance(account.getBalance() - amount);
         accountRepository.save(account);
-        Transaction transaction = new Transaction("Withdraw", amount, null, null, account);
+        Transaction transaction = new Transaction("Withdraw", amount, "Withdrawal from account", account, null);
         Transaction savedTransaction = transactionRepository.save(transaction);
         return new TransactionDTO(savedTransaction);
     }
@@ -61,7 +62,7 @@ public class TransactionService {
         receiver.setBalance(receiver.getBalance() + amount);
         accountRepository.save(sender);
         accountRepository.save(receiver);
-        Transaction transaction = new Transaction("Transfer", amount, null, sender, receiver);
+        Transaction transaction = new Transaction("Transfer", amount, "Transfer between accounts", sender, receiver);
         Transaction savedTransaction = transactionRepository.save(transaction);
         return new TransactionDTO(savedTransaction);
     }

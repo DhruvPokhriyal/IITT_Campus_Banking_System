@@ -18,8 +18,11 @@ public class Account {
     @OneToOne
     private User user;
 
-    @OneToMany(mappedBy = "account", cascade = CascadeType.ALL)
-    private java.util.List<Transaction> transactions;
+    @OneToMany(mappedBy = "sender", cascade = CascadeType.ALL)
+    private java.util.List<Transaction> sentTransactions;
+
+    @OneToMany(mappedBy = "receiver", cascade = CascadeType.ALL)
+    private java.util.List<Transaction> receivedTransactions;
 
     public Account() {
     }
@@ -56,6 +59,22 @@ public class Account {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public java.util.List<Transaction> getSentTransactions() {
+        return sentTransactions;
+    }
+
+    public void setSentTransactions(java.util.List<Transaction> sentTransactions) {
+        this.sentTransactions = sentTransactions;
+    }
+
+    public java.util.List<Transaction> getReceivedTransactions() {
+        return receivedTransactions;
+    }
+
+    public void setReceivedTransactions(java.util.List<Transaction> receivedTransactions) {
+        this.receivedTransactions = receivedTransactions;
     }
 
     @Override
