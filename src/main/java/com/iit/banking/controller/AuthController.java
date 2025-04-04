@@ -15,7 +15,6 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -27,7 +26,7 @@ public class AuthController {
         this.authService = authService;
     }
 
-    @Operation(summary = "User login", description = "Authenticate a user and return a JWT token")
+    @Operation(summary = "User login", description = "Authenticate a user")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Successfully authenticated"),
             @ApiResponse(responseCode = "401", description = "Invalid credentials")
@@ -39,7 +38,7 @@ public class AuthController {
         return ResponseEntity.ok(response);
     }
 
-    @Operation(summary = "Admin login", description = "Authenticate an admin and return a JWT token")
+    @Operation(summary = "Admin login", description = "Authenticate an admin")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Successfully authenticated"),
             @ApiResponse(responseCode = "401", description = "Invalid credentials")
@@ -51,15 +50,14 @@ public class AuthController {
         return ResponseEntity.ok(response);
     }
 
-    @Operation(summary = "Validate token", description = "Validate a JWT token")
+    @Operation(summary = "Validate token", description = "Validate authentication")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Token is valid"),
-            @ApiResponse(responseCode = "401", description = "Invalid token")
+            @ApiResponse(responseCode = "200", description = "Authentication is valid"),
+            @ApiResponse(responseCode = "401", description = "Invalid authentication")
     })
-    @SecurityRequirement(name = "Bearer Authentication")
     @PostMapping("/validate")
     public ResponseEntity<Boolean> validateToken(
-            @Parameter(description = "JWT token to validate", required = true) @RequestBody String token) {
+            @Parameter(description = "Token to validate", required = true) @RequestBody String token) {
         boolean isValid = authService.validateToken(token);
         return ResponseEntity.ok(isValid);
     }
