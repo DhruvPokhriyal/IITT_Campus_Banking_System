@@ -3,28 +3,32 @@ package com.iit.banking.dto;
 import com.iit.banking.model.entity.Account;
 import com.iit.banking.model.entity.User;
 
+import java.math.BigDecimal;
+
 public class UserDTO {
 
     private Long id;
     private String name;
     private String email;
     private String accountNumber;
-    private Double balance;
+    private BigDecimal balance;
 
+    // No-arg constructor for frameworks like Jackson/Spring
+    public UserDTO() {
+    }
+
+    // Constructor that converts User entity to DTO
     public UserDTO(User user) {
         this.id = user.getId();
         this.name = user.getName();
         this.email = user.getEmail();
         Account account = user.getAccount();
-        if (account != null) {
-            this.accountNumber = account.getAccountNumber();
-            this.balance = account.getBalance();
-        } else {
-            this.accountNumber = null;
-            this.balance = 0.0;
-        }
+        this.accountNumber = account != null ? account.getAccountNumber() : null;
+        this.balance = account != null && account.getBalance() != null ? BigDecimal.valueOf(account.getBalance())
+                : BigDecimal.ZERO;
     }
 
+    // Getters
     public Long getId() {
         return id;
     }
@@ -41,8 +45,29 @@ public class UserDTO {
         return accountNumber;
     }
 
-    public Double getBalance() {
+    public BigDecimal getBalance() {
         return balance;
+    }
+
+    // Setters
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setAccountNumber(String accountNumber) {
+        this.accountNumber = accountNumber;
+    }
+
+    public void setBalance(BigDecimal balance) {
+        this.balance = balance;
     }
 
     @Override
