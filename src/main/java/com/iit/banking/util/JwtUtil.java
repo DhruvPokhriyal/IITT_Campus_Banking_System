@@ -1,43 +1,83 @@
 package com.iit.banking.util;
 
-import java.nio.charset.StandardCharsets;
-import java.security.Key;
-import java.util.Date;
-
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.security.Keys;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
-import io.jsonwebtoken.*;
-import io.jsonwebtoken.security.Keys;
+import java.security.Key;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.function.Function;
 
 @Component
 public class JwtUtil {
-    private final String secretKey = "orgkpspbsijr0f9j2039j02e01i2-31240988)*_)!_)@($_!)(#@&Y91FNKDFJNAEJNDOAIWJD0J02J10R01IJFIAJSDIJAOWIDJOAIWJDOUABSRGUYIWJDPIKAJ1293I0)";
-    private final long tokenExpirationTime = 1000 * 60 * 60;
 
-    private Key getSecretKey() {
-        return Keys.hmacShaKeyFor(secretKey.getBytes());
+    @Value("${jwt.secret}")
+    private String secret;
+
+    @Value("${jwt.expiration}")
+    private Long expiration;
+
+    private Key getSigningKey() {
+        byte[] keyBytes = secret.getBytes();
+        return Keys.hmacShaKeyFor(keyBytes);
     }
 
-    public String generateToken(String email) {
-        return io.jsonwebtoken.Jwts.builder()
-                .setSubject(email)
-                .setIssuedAt(new Date())
-                .setExpiration(new java.util.Date(System.currentTimeMillis() + tokenExpirationTime))
-                .signWith(getSecretKey(), SignatureAlgorithm.HS256)
+    public String generateToken(Authentication authentication) {
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        Map<String, Object> claims = new HashMap<>();
+        claims.put("roles", authentication.getAuthorities());
+        return createToken(claims, userDetails.getUsername());
+    }
+
+    public String generateToken(String email, String role) {
+        Map<String, Object> claims = new HashMap<>();
+        claims.put("roles", role);
+        return createToken(claims, email);
+    }
+
+    private String createToken(Map<String, Object> claims, String subject) {
+        return Jwts.builder()
+                .setClaims(claims)
+                .setSubject(subject)
+                .setIssuedAt(new Date(System.currentTimeMillis()))
+                .setExpiration(new Date(System.currentTimeMillis() + expiration * 1000))
+                .signWith(getSigningKey(), SignatureAlgorithm.HS256)
                 .compact();
     }
 
-    public boolean validateToken(String token) {
+    public Boolean validateToken(String token) {
         try {
-            Jwts.parserBuilder().setSigningKey(getSecretKey()).build().parseClaimsJws(token);
+            Jwts.parserBuilder()
+                    .setSigningKey(getSigningKey())
+                    .build()
+                    .parseClaimsJws(token);
             return true;
-        } catch (JwtException e) {
+        } catch (Exception e) {
             return false;
         }
     }
 
-    public String extractEmail(String token) {
-        return Jwts.parserBuilder().setSigningKey(getSecretKey()).build().parseClaimsJws(token).getBody().getSubject();
+    public String getEmailFromToken(String token) {
+        return extractClaim(token, Claims::getSubject);
     }
 
+    private <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
+        final Claims claims = extractAllClaims(token);
+        return claimsResolver.apply(claims);
+    }
+
+    private Claims extractAllClaims(String token) {
+        return Jwts.parserBuilder()
+                .setSigningKey(getSigningKey())
+                .build()
+                .parseClaimsJws(token)
+                .getBody();
+    }
 }

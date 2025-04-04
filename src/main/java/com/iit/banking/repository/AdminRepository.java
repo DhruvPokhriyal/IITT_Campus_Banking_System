@@ -3,8 +3,8 @@ package com.iit.banking.repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.iit.banking.model.entity.Admin;
+import java.util.Optional;
 
 public interface AdminRepository extends JpaRepository<Admin, Long> {
-    <Optional> Admin findByEmail(String email);
-
+    Optional<Admin> findByEmail(String email);
 }
