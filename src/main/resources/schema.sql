@@ -52,7 +52,7 @@ CREATE TABLE accounts
 CREATE TABLE transactions
 (
     id BIGSERIAL PRIMARY KEY,
-    transaction_type VARCHAR(20) NOT NULL CHECK (transaction_type IN ('deposit', 'withdrawal', 'transfer')),
+    transaction_type VARCHAR(20) NOT NULL CHECK (transaction_type IN ('Deposit', 'Withdrawal', 'Transfer')),
     amount DECIMAL(19, 4) NOT NULL CHECK (amount > 0),
     description VARCHAR(1000),
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
