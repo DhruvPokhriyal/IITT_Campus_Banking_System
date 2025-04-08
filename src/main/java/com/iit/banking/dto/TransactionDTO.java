@@ -19,8 +19,8 @@ public class TransactionDTO {
         this.amount = transaction.getAmount();
         this.description = transaction.getDescription();
         this.timestamp = transaction.getTimestamp();
-        this.senderId = transaction.getSender().getId();
-        this.receiverId = transaction.getReceiver().getId();
+        this.senderId = transaction.getSender() != null ? transaction.getSender().getId() : null;
+        this.receiverId = transaction.getReceiver() != null ? transaction.getReceiver().getId() : null;
     }
 
     public Long getId() {

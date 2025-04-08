@@ -23,7 +23,7 @@ public class TransactionService {
     }
 
     public List<TransactionDTO> getAllTransactionsByAccountId(Long accountId) {
-        return transactionRepository.findBySender_IdOrReceiver_Id(accountId, accountId).stream()
+        return transactionRepository.findBySender_AccountNumberOrReceiver_AccountNumber(accountId, accountId).stream()
                 .map(TransactionDTO::new)
                 .toList();
     }
