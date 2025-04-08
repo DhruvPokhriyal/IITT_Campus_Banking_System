@@ -52,6 +52,12 @@ public class UserService {
                 throw new IllegalArgumentException("Account already exists with this email");
             }
 
+            // Check if account number already exists
+            if (accountRepository.findByAccountNumber(userRequest.getAccountNumber()).isPresent()) {
+                logger.warn("Account number already exists: {}", userRequest.getAccountNumber());
+                throw new IllegalArgumentException("Account number already exists");
+            }
+
             // Create and save user
             User user = new User();
             user.setName(userRequest.getName());

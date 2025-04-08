@@ -13,7 +13,7 @@ public class Account {
     private Long id;
 
     @Column(name = "account_number", unique = true, nullable = false)
-    private String accountNumber;
+    private Long accountNumber;
 
     @Column(name = "balance")
     private Double balance;
@@ -31,7 +31,7 @@ public class Account {
     public Account() {
     }
 
-    public Account(String accountNumber, Double balance, User user) {
+    public Account(Long accountNumber, Double balance, User user) {
         this.accountNumber = accountNumber;
         this.balance = balance;
         this.user = user;
@@ -41,11 +41,11 @@ public class Account {
         return id;
     }
 
-    public String getAccountNumber() {
+    public Long getAccountNumber() {
         return accountNumber;
     }
 
-    public void setAccountNumber(String accountNumber) {
+    public void setAccountNumber(Long accountNumber) {
         this.accountNumber = accountNumber;
     }
 
@@ -85,7 +85,7 @@ public class Account {
     public String toString() {
         return "Account{" +
                 "id=" + id +
-                ", accountNumber='" + accountNumber + '\'' +
+                ", accountNumber=" + accountNumber +
                 ", balance=" + balance +
                 '}';
     }

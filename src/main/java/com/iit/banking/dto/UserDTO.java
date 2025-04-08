@@ -10,7 +10,7 @@ public class UserDTO {
     private Long id;
     private String name;
     private String email;
-    private String accountNumber;
+    private Long accountNumber;
     private BigDecimal balance;
 
     // No-arg constructor for frameworks like Jackson/Spring
@@ -41,7 +41,7 @@ public class UserDTO {
         return email;
     }
 
-    public String getAccountNumber() {
+    public Long getAccountNumber() {
         return accountNumber;
     }
 
@@ -62,7 +62,7 @@ public class UserDTO {
         this.email = email;
     }
 
-    public void setAccountNumber(String accountNumber) {
+    public void setAccountNumber(Long accountNumber) {
         this.accountNumber = accountNumber;
     }
 
@@ -76,7 +76,7 @@ public class UserDTO {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", email='" + email + '\'' +
-                ", accountNumber='" + accountNumber + '\'' +
+                ", accountNumber=" + accountNumber +
                 ", balance=" + balance +
                 '}';
     }

@@ -4,7 +4,7 @@ import com.iit.banking.model.entity.Account;
 
 public class AccountDTO {
     private Long id;
-    private String accountNumber;
+    private Long accountNumber;
     private Double balance;
 
     public AccountDTO(Account account) {
@@ -17,7 +17,7 @@ public class AccountDTO {
         return id;
     }
 
-    public String getAccountNumber() {
+    public Long getAccountNumber() {
         return accountNumber;
     }
 
@@ -29,7 +29,7 @@ public class AccountDTO {
     public String toString() {
         return "AccountDTO{" +
                 "id=" + id +
-                ", accountNumber='" + accountNumber + '\'' +
+                ", accountNumber=" + accountNumber +
                 ", balance=" + balance +
                 '}';
     }

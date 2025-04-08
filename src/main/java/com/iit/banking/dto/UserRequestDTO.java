@@ -6,13 +6,13 @@ public class UserRequestDTO {
     private String email;
     private String password;
     private String confirmPassword;
-    private String accountNumber;
+    private Long accountNumber;
     private Double balance;
 
     public UserRequestDTO() {
     }
 
-    public UserRequestDTO(String name, String email, String password, String confirmPassword, String accountNumber,
+    public UserRequestDTO(String name, String email, String password, String confirmPassword, Long accountNumber,
             Double balance) {
         this.name = name;
         this.email = email;
@@ -54,11 +54,11 @@ public class UserRequestDTO {
         this.confirmPassword = confirmPassword;
     }
 
-    public String getAccountNumber() {
+    public Long getAccountNumber() {
         return accountNumber;
     }
 
-    public void setAccountNumber(String accountNumber) {
+    public void setAccountNumber(Long accountNumber) {
         this.accountNumber = accountNumber;
     }
 
@@ -77,7 +77,7 @@ public class UserRequestDTO {
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
                 ", confirmPassword='" + confirmPassword + '\'' +
-                ", accountNumber='" + accountNumber + '\'' +
+                ", accountNumber=" + accountNumber +
                 ", balance=" + balance +
                 '}';
     }
