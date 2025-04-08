@@ -14,12 +14,12 @@ public class AccountService {
         this.accountRepository = accountRepository;
     }
 
-    public AccountDTO getAccountByAccountNumber(String accountNumber) {
+    public AccountDTO getAccountByAccountNumber(Long accountNumber) {
         AccountDTO account = new AccountDTO(accountRepository.findByAccountNumber(accountNumber));
         return account;
     }
 
-    public double getBalanceByAccountNumber(String accountNumber) {
+    public double getBalanceByAccountNumber(Long accountNumber) {
         return accountRepository.findByAccountNumber(accountNumber).getBalance();
     }
 

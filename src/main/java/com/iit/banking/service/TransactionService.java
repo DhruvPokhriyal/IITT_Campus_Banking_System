@@ -30,7 +30,7 @@ public class TransactionService {
 
     @Transactional
     public TransactionDTO deposit(Long accountId, Double amount) {
-        Account account = accountRepository.findById(accountId).orElseThrow();
+        Account account = accountRepository.findByAccountNumber(accountId);
         account.setBalance(account.getBalance() + amount);
         accountRepository.save(account);
         Transaction transaction = new Transaction("Deposit", amount, "Deposit to account", null, account);
@@ -40,7 +40,7 @@ public class TransactionService {
 
     @Transactional
     public TransactionDTO withdraw(Long accountId, Double amount) {
-        Account account = accountRepository.findById(accountId).orElseThrow();
+        Account account = accountRepository.findByAccountNumber(accountId);
         if (account.getBalance() < amount) {
             throw new Error("Insufficient balance");
         }
@@ -53,8 +53,8 @@ public class TransactionService {
 
     @Transactional
     public TransactionDTO transfer(Long senderId, Long receiverId, Double amount) {
-        Account sender = accountRepository.findById(senderId).orElseThrow();
-        Account receiver = accountRepository.findById(receiverId).orElseThrow();
+        Account sender = accountRepository.findByAccountNumber(senderId);
+        Account receiver = accountRepository.findByAccountNumber(receiverId);
         if (sender.getBalance() < amount) {
             throw new Error("Insufficient balance");
         }

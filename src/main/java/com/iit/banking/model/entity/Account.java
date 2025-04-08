@@ -11,7 +11,11 @@ public class Account {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(name = "account_number", unique = true, nullable = false)
     private String accountNumber;
+
+    @Column(name = "balance")
     private Double balance;
 
     @JoinColumn(name = "user_id", unique = true)

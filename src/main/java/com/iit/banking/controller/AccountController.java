@@ -31,7 +31,7 @@ public class AccountController {
     })
     @GetMapping("/{accountNumber}")
     public ResponseEntity<AccountDTO> getAccountByAccountNumber(
-            @Parameter(description = "Account number", required = true) @PathVariable String accountNumber) {
+            @Parameter(description = "Account number", required = true) @PathVariable Long accountNumber) {
         AccountDTO account = accountService.getAccountByAccountNumber(accountNumber);
         return ResponseEntity.ok(account);
     }
@@ -43,7 +43,7 @@ public class AccountController {
     })
     @GetMapping("/{accountNumber}/balance")
     public ResponseEntity<Double> getBalanceByAccountNumber(
-            @Parameter(description = "Account number", required = true) @PathVariable String accountNumber) {
+            @Parameter(description = "Account number", required = true) @PathVariable Long accountNumber) {
         double balance = accountService.getBalanceByAccountNumber(accountNumber);
         return ResponseEntity.ok(balance);
     }
