@@ -17,8 +17,10 @@ public class Transaction {
     @Column(nullable = false)
     private Double amount;
 
+    @Column(name = "description", nullable = true)
     private String description;
 
+    @Column(name = "created_at", nullable = false)
     private LocalDateTime timestamp = LocalDateTime.now();
 
     @ManyToOne
