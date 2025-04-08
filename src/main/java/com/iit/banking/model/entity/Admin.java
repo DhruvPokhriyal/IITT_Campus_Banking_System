@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "admin")
+@Table(name = "admins")
 @SequenceGenerator(name = "admin_seq", sequenceName = "admin_id_seq", allocationSize = 1)
 @NoArgsConstructor
 @Getter

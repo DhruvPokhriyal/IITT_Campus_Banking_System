@@ -6,6 +6,7 @@ import java.util.Objects;
 import jakarta.persistence.*;
 
 @Entity
+@Table(name = "transactions")
 public class Transaction {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,11 +22,11 @@ public class Transaction {
     private LocalDateTime timestamp = LocalDateTime.now();
 
     @ManyToOne
-    @JoinColumn(name = "sender_account_id", referencedColumnName = "id", nullable = true)
+    @JoinColumn(name = "from_account_id", referencedColumnName = "id", nullable = true)
     private Account sender;
 
     @ManyToOne
-    @JoinColumn(name = "receiver_account_id", referencedColumnName = "id", nullable = true)
+    @JoinColumn(name = "to_account_id", referencedColumnName = "id", nullable = true)
     private Account receiver;
 
     public Transaction() {
