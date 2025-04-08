@@ -17,7 +17,7 @@ VALUES
 INSERT INTO account
     (account_number, balance, user_id)
 VALUES
-    ('ACC123456', 1000.00, 1);
+    (123456, 1000.00, 1);
 
 -- Insert admin user
 INSERT INTO admin
@@ -36,8 +36,8 @@ VALUES
 INSERT INTO accounts
     (account_number, balance, user_id)
 VALUES
-    ('ACC001', 1000.00, 1),
-    ('ACC002', 2000.00, 2);
+    (1001, 1000.00, 1),
+    (1002, 2000.00, 2);
 
 -- Insert test transactions
 INSERT INTO transactions
