@@ -9,6 +9,9 @@ import com.iit.banking.dto.TransactionDTO;
 import com.iit.banking.dto.UserDTO;
 import com.iit.banking.model.entity.Transaction;
 import com.iit.banking.service.AdminService;
+import com.iit.banking.dto.AdminRequestDTO;
+import com.iit.banking.dto.AdminUpdateDTO;
+import com.iit.banking.model.entity.Admin;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -84,5 +87,23 @@ public class AdminController {
             @Parameter(description = "Transaction to reverse", required = true) @RequestBody Transaction transaction) {
         TransactionDTO reversedTransaction = adminService.reverseTransaction(transaction);
         return ResponseEntity.ok(reversedTransaction);
+    }
+
+    @PostMapping("/register")
+    public ResponseEntity<Admin> registerAdmin(@RequestBody AdminRequestDTO adminRequestDTO) {
+        Admin admin = adminService.createAdmin(adminRequestDTO);
+        return ResponseEntity.ok(admin);
+    }
+
+    @PutMapping("/{email}")
+    public ResponseEntity<Admin> updateAdmin(@PathVariable String email, @RequestBody AdminUpdateDTO adminUpdateDTO) {
+        Admin updatedAdmin = adminService.updateAdmin(email, adminUpdateDTO);
+        return ResponseEntity.ok(updatedAdmin);
+    }
+
+    @DeleteMapping("/{email}")
+    public ResponseEntity<Void> deleteAdmin(@PathVariable String email) {
+        adminService.deleteAdmin(email);
+        return ResponseEntity.ok().build();
     }
 }

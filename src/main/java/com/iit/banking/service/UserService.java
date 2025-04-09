@@ -5,7 +5,6 @@ import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.iit.banking.dto.PasswordUpdateDTO;
@@ -59,7 +58,7 @@ public class UserService {
             User user = new User();
             user.setName(userRequest.getName());
             user.setEmail(userRequest.getEmail());
-            user.setPassword(passwordEncoder.encode(userRequest.getPassword()));
+            user.setPassword(userRequest.getPassword()); // Store plain text password
             User savedUser = userRepository.save(user);
             logger.debug("User created successfully with email: {}", userRequest.getEmail());
 
@@ -113,11 +112,11 @@ public class UserService {
                 .orElseThrow(
                         () -> new IllegalArgumentException("User not found with email: " + passwordUpdate.getEmail()));
 
-        if (!passwordEncoder.matches(passwordUpdate.getOldPassword(), user.getPassword())) {
+        if (!passwordUpdate.getOldPassword().equals(user.getPassword())) {
             throw new IllegalArgumentException("Old password is incorrect");
         }
 
-        user.setPassword(passwordEncoder.encode(passwordUpdate.getNewPassword()));
+        user.setPassword(passwordUpdate.getNewPassword()); // Store plain text password
         userRepository.save(user);
     }
 
