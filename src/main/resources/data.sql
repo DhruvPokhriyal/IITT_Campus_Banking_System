@@ -1,6 +1,6 @@
 -- Insert default admin accounts
 -- Plain text password: 'admin123'
-INSERT INTO admin
+INSERT INTO admins
     (name, email, password)
 VALUES
     ('Super Admin', 'superadmin@iitbank.com', 'admin123'),
@@ -8,29 +8,29 @@ VALUES
 
 -- Insert a test user account
 -- Plain text password: 'user123'
-INSERT INTO "user"
+INSERT INTO users
     (name, email, password)
 VALUES
     ('Test User', 'testuser@iitbank.com', 'user123');
 
 -- Insert a test account for the test user
-INSERT INTO account
+INSERT INTO accounts
     (account_number, balance, user_id)
 VALUES
     (123456, 1000.00, 1);
 
 -- Insert admin user
-INSERT INTO admin
+INSERT INTO admins
     (name, email, password)
 VALUES
-    ('Admin User', 'admin@iitbank.com', '$2a$10$rDmFN6ZJvwFqMz1qZ.0QZOYVxqX5Y5Y5Y5Y5Y5Y5Y5Y5Y5Y5Y5Y5');
+    ('Admin User', 'admin@iitbank.com', 'admin123');
 
 -- Insert test users
 INSERT INTO users
     (name, email, password)
 VALUES
-    ('John Doe', 'john@example.com', '$2a$10$rDmFN6ZJvwFqMz1qZ.0QZOYVxqX5Y5Y5Y5Y5Y5Y5Y5Y5Y5Y5Y5Y5'),
-    ('Jane Smith', 'jane@example.com', '$2a$10$rDmFN6ZJvwFqMz1qZ.0QZOYVxqX5Y5Y5Y5Y5Y5Y5Y5Y5Y5Y5Y5Y5');
+    ('John Doe', 'john@example.com', 'password123'),
+    ('Jane Smith', 'jane@example.com', 'password123');
 
 -- Insert test accounts
 INSERT INTO accounts

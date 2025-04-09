@@ -1,6 +1,5 @@
 package com.iit.banking.service;
 
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.iit.banking.dto.LoginRequestDTO;
@@ -12,11 +11,9 @@ import com.iit.banking.repository.UserRepository;
 public class AuthService {
 
     private final UserRepository userRepository;
-    private final PasswordEncoder passwordEncoder;
 
-    public AuthService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    public AuthService(UserRepository userRepository) {
         this.userRepository = userRepository;
-        this.passwordEncoder = passwordEncoder;
     }
 
     public LoginResponseDTO login(LoginRequestDTO loginRequest) {
@@ -24,13 +21,12 @@ public class AuthService {
         User user = userRepository.findByEmail(loginRequest.getEmail())
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
-        // Check password
-        if (!passwordEncoder.matches(loginRequest.getPassword(), user.getPassword())) {
+        // Check password (plain text comparison)
+        if (!loginRequest.getPassword().equals(user.getPassword())) {
             throw new RuntimeException("Invalid credentials");
         }
 
         // Instead of generating a JWT, just return a simple success message
-        // You could also create a session ID or some other identifier
         return new LoginResponseDTO("LOGIN_SUCCESS");
     }
 
@@ -39,15 +35,10 @@ public class AuthService {
         User user = userRepository.findByEmail(loginRequest.getEmail())
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
-        // Check password
-        if (!passwordEncoder.matches(loginRequest.getPassword(), user.getPassword())) {
+        // Check password (plain text comparison)
+        if (!loginRequest.getPassword().equals(user.getPassword())) {
             throw new RuntimeException("Invalid credentials");
         }
-
-        // Check if user is admin (assuming there's a role field in your User entity)
-        // if (!"ADMIN".equals(user.getRole())) {
-        // throw new RuntimeException("Not authorized as admin");
-        // }
 
         // Simple success message for admin login
         return new LoginResponseDTO("ADMIN_LOGIN_SUCCESS");
@@ -55,7 +46,6 @@ public class AuthService {
 
     public boolean validateToken(String token) {
         // Since we're not using JWT, this can be simplified
-        // This could validate a session if you implement sessions
         return "LOGIN_SUCCESS".equals(token) || "ADMIN_LOGIN_SUCCESS".equals(token);
     }
 }

@@ -20,16 +20,13 @@ import jakarta.transaction.Transactional;
 public class AdminService {
     private final AdminRepository adminRepository;
     private final UserRepository userRepository;
-    private final PasswordEncoder passwordEncoder;
     private final TransactionRepository transactionRepository;
 
     public AdminService(AdminRepository adminRepository, UserRepository userRepository,
-            TransactionRepository transactionRepository,
-            PasswordEncoder passwordEncoder) {
+            TransactionRepository transactionRepository) {
         this.adminRepository = adminRepository;
         this.userRepository = userRepository;
         this.transactionRepository = transactionRepository;
-        this.passwordEncoder = passwordEncoder;
     }
 
     public List<AdminDTO> getAllAdmins() {
