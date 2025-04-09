@@ -48,7 +48,7 @@ public class TransactionService {
         }
         account.setBalance(account.getBalance() - amount);
         accountRepository.save(account);
-        Transaction transaction = new Transaction("Withdraw", amount, "Withdrawal from account", account, null);
+        Transaction transaction = new Transaction("Withdrawal", amount, "Withdrawal from account", account, null);
         Transaction savedTransaction = transactionRepository.save(transaction);
         return new TransactionDTO(savedTransaction);
     }
