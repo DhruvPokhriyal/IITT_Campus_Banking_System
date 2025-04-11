@@ -14,10 +14,10 @@ VALUES
     ('Test User', 'testuser@iitbank.com', 'user123');
 
 -- Insert a test account for the test user
-INSERT INTO accounts
-    (account_number, balance, user_id)
-VALUES
-    (123456, 1000.00, 1);
+-- INSERT INTO accounts
+--     (account_number, balance, user_id)
+-- VALUES
+--     (123456, 1000.00, 1);
 
 -- Insert admin user
 INSERT INTO admins

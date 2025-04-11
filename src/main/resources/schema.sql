@@ -38,9 +38,9 @@ CREATE TABLE users
 CREATE TABLE accounts
 (
     id BIGSERIAL PRIMARY KEY,
-    account_number INTEGER UNIQUE NOT NULL,
+    account_number BIGINT UNIQUE NOT NULL,
     balance DECIMAL(19, 4) NOT NULL DEFAULT 0.0000,
-    user_id BIGINT NOT NULL,
+    user_id BIGINT NOT NULL UNIQUE,
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
@@ -69,3 +69,27 @@ CREATE INDEX idx_account_user_id ON accounts(user_id);
 CREATE INDEX idx_transaction_from_account ON transactions(from_account_id);
 CREATE INDEX idx_transaction_to_account ON transactions(to_account_id);
 CREATE INDEX idx_transaction_created_at ON transactions(created_at);
+
+-- ======================
+-- CLEANUP SCRIPT
+-- ======================
+-- Remove duplicate accounts (keeping the one with the lowest ID)
+DELETE FROM accounts a1
+WHERE EXISTS (
+    SELECT 1
+FROM accounts a2
+WHERE a2.account_number = a1.account_number
+    AND a2.id < a1.id
+);
+
+-- Remove accounts without associated users
+DELETE FROM accounts
+WHERE user_id NOT IN (SELECT id
+FROM users);
+
+-- Remove transactions without associated accounts
+DELETE FROM transactions
+WHERE (from_account_id IS NOT NULL AND from_account_id NOT IN (SELECT id
+    FROM accounts))
+    OR (to_account_id IS NOT NULL AND to_account_id NOT IN (SELECT id
+    FROM accounts));

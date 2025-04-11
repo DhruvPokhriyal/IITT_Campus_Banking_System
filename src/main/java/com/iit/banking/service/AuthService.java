@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 
 import com.iit.banking.dto.LoginRequestDTO;
 import com.iit.banking.dto.LoginResponseDTO;
+import com.iit.banking.dto.UserDTO;
 import com.iit.banking.model.entity.Admin;
 import com.iit.banking.model.entity.User;
 import com.iit.banking.repository.AdminRepository;
@@ -30,22 +31,22 @@ public class AuthService {
             throw new RuntimeException("Invalid credentials");
         }
 
-        // Instead of generating a JWT, just return a simple success message
-        return new LoginResponseDTO("LOGIN_SUCCESS");
+        // Return success message with user data
+        return new LoginResponseDTO("LOGIN_SUCCESS", new UserDTO(user));
     }
 
     public LoginResponseDTO adminLogin(LoginRequestDTO loginRequest) {
-        // Find user by email
+        // Find admin by email
         Admin admin = adminRepository.findByEmail(loginRequest.getEmail())
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new RuntimeException("Admin not found"));
 
         // Check password (plain text comparison)
         if (!loginRequest.getPassword().equals(admin.getPassword())) {
             throw new RuntimeException("Invalid credentials");
         }
 
-        // Simple success message for admin login
-        return new LoginResponseDTO("ADMIN_LOGIN_SUCCESS");
+        // Return success message with admin data
+        return new LoginResponseDTO("ADMIN_LOGIN_SUCCESS", new UserDTO(admin));
     }
 
     public boolean validateToken(String token) {
