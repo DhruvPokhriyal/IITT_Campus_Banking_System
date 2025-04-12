@@ -1,0 +1,400 @@
+{
+    "authentication": {
+        "user_login": {
+            "endpoint": "/api/auth/login",
+            "method": "POST",
+            "request": {
+                "email": "string",
+                "password": "string"
+            },
+            "response": {
+                "status": "string (LOGIN_SUCCESS)",
+                "message": "string (Login successful)",
+                "user": {
+                    "id": "number",
+                    "name": "string",
+                    "email": "string",
+                    "accountNumber": "number",
+                    "balance": "number",
+                    "role": "string (USER)"
+                }
+            }
+        },
+        "admin_login": {
+            "endpoint": "/api/auth/admin/login",
+            "method": "POST",
+            "request": {
+                "email": "string",
+                "password": "string"
+            },
+            "response": {
+                "status": "string (ADMIN_LOGIN_SUCCESS)",
+                "message": "string (Login successful)",
+                "user": {
+                    "id": "number",
+                    "name": "string",
+                    "email": "string",
+                    "role": "string (ADMIN)"
+                }
+            }
+        },
+        "validate_token": {
+            "endpoint": "/api/auth/validate",
+            "method": "POST",
+            "request": "string (token)",
+            "response": "boolean"
+        }
+    },
+    "users": {
+        "register": {
+            "endpoint": "/api/users/register",
+            "method": "POST",
+            "request": {
+                "name": "string",
+                "email": "string",
+                "password": "string",
+                "confirmPassword": "string",
+                "accountNumber": "number",
+                "balance": "number (optional)"
+            },
+            "response": {
+                "id": "number",
+                "name": "string",
+                "email": "string",
+                "accountNumber": "number",
+                "balance": "number"
+            }
+        },
+        "get_all": {
+            "endpoint": "/api/users",
+            "method": "GET",
+            "request": null,
+            "response": [
+                {
+                    "id": "number",
+                    "name": "string",
+                    "email": "string",
+                    "accountNumber": "number",
+                    "balance": "number"
+                }
+            ]
+        },
+        "get_by_id": {
+            "endpoint": "/api/users/{id}",
+            "method": "GET",
+            "request": null,
+            "response": {
+                "id": "number",
+                "name": "string",
+                "email": "string",
+                "accountNumber": "number",
+                "balance": "number"
+            }
+        },
+        "get_by_email": {
+            "endpoint": "/api/users/email/{email}",
+            "method": "GET",
+            "request": null,
+            "response": {
+                "id": "number",
+                "name": "string",
+                "email": "string",
+                "accountNumber": "number",
+                "balance": "number"
+            }
+        },
+        "update_name": {
+            "endpoint": "/api/users/name",
+            "method": "PUT",
+            "request": {
+                "name": "string",
+                "email": "string"
+            },
+            "response": null
+        },
+        "update_password": {
+            "endpoint": "/api/users/password",
+            "method": "PUT",
+            "request": {
+                "email": "string",
+                "oldPassword": "string",
+                "newPassword": "string"
+            },
+            "response": null
+        },
+        "delete": {
+            "endpoint": "/api/users",
+            "method": "DELETE",
+            "request": {
+                "id": "number",
+                "name": "string",
+                "email": "string",
+                "accountNumber": "number",
+                "balance": "number"
+            },
+            "response": null
+        }
+    },
+    "accounts": {
+        "get_by_number": {
+            "endpoint": "/api/accounts/{accountNumber}",
+            "method": "GET",
+            "request": null,
+            "response": {
+                "id": "number",
+                "accountNumber": "number",
+                "balance": "number"
+            }
+        },
+        "get_balance": {
+            "endpoint": "/api/accounts/{accountNumber}/balance",
+            "method": "GET",
+            "request": null,
+            "response": "number"
+        }
+    },
+    "transactions": {
+        "get_by_account": {
+            "endpoint": "/api/transactions/account/{accountId}",
+            "method": "GET",
+            "request": null,
+            "response": [
+                {
+                    "id": "number",
+                    "transactionType": "string (Deposit|Withdrawal|Transfer)",
+                    "amount": "number",
+                    "description": "string",
+                    "timestamp": "string (ISO-8601)",
+                    "sender": {
+                        "id": "number",
+                        "accountNumber": "number"
+                    },
+                    "receiver": {
+                        "id": "number",
+                        "accountNumber": "number"
+                    }
+                }
+            ]
+        },
+        "deposit": {
+            "endpoint": "/api/transactions/deposit/{accountId}",
+            "method": "POST",
+            "request": {
+                "amount": "number"
+            },
+            "response": {
+                "id": "number",
+                "transactionType": "string (Deposit)",
+                "amount": "number",
+                "description": "string",
+                "timestamp": "string (ISO-8601)",
+                "receiver": {
+                    "id": "number",
+                    "accountNumber": "number"
+                }
+            }
+        },
+        "withdraw": {
+            "endpoint": "/api/transactions/withdraw/{accountId}",
+            "method": "POST",
+            "request": {
+                "amount": "number"
+            },
+            "response": {
+                "id": "number",
+                "transactionType": "string (Withdrawal)",
+                "amount": "number",
+                "description": "string",
+                "timestamp": "string (ISO-8601)",
+                "sender": {
+                    "id": "number",
+                    "accountNumber": "number"
+                }
+            }
+        },
+        "transfer": {
+            "endpoint": "/api/transactions/transfer",
+            "method": "POST",
+            "request": {
+                "senderId": "number",
+                "receiverId": "number",
+                "amount": "number"
+            },
+            "response": {
+                "id": "number",
+                "transactionType": "string (Transfer)",
+                "amount": "number",
+                "description": "string",
+                "timestamp": "string (ISO-8601)",
+                "sender": {
+                    "id": "number",
+                    "accountNumber": "number"
+                },
+                "receiver": {
+                    "id": "number",
+                    "accountNumber": "number"
+                }
+            }
+        }
+    },
+    "admin": {
+        "register": {
+            "endpoint": "/api/admin/register",
+            "method": "POST",
+            "request": {
+                "name": "string",
+                "email": "string",
+                "password": "string",
+                "confirmPassword": "string"
+            },
+            "response": {
+                "id": "number",
+                "name": "string",
+                "email": "string"
+            }
+        },
+        "get_all": {
+            "endpoint": "/api/admin/all",
+            "method": "GET",
+            "request": null,
+            "response": [
+                {
+                    "id": "number",
+                    "name": "string",
+                    "email": "string"
+                }
+            ]
+        },
+        "get_by_id": {
+            "endpoint": "/api/admin/{id}",
+            "method": "GET",
+            "request": null,
+            "response": {
+                "id": "number",
+                "name": "string",
+                "email": "string"
+            }
+        },
+        "get_by_email": {
+            "endpoint": "/api/admin/email/{email}",
+            "method": "GET",
+            "request": null,
+            "response": {
+                "id": "number",
+                "name": "string",
+                "email": "string"
+            }
+        },
+        "update_name": {
+            "endpoint": "/api/admin/update-name",
+            "method": "PUT",
+            "request": {
+                "name": "string",
+                "email": "string"
+            },
+            "response": null
+        },
+        "update_password": {
+            "endpoint": "/api/admin/update-password",
+            "method": "PUT",
+            "request": {
+                "email": "string",
+                "oldPassword": "string",
+                "newPassword": "string"
+            },
+            "response": null
+        },
+        "delete": {
+            "endpoint": "/api/admin/delete",
+            "method": "DELETE",
+            "request": {
+                "id": "number",
+                "name": "string",
+                "email": "string"
+            },
+            "response": null
+        },
+        "get_all_users": {
+            "endpoint": "/api/admin/users",
+            "method": "GET",
+            "request": null,
+            "response": [
+                {
+                    "id": "number",
+                    "name": "string",
+                    "email": "string",
+                    "accountNumber": "number",
+                    "balance": "number"
+                }
+            ]
+        },
+        "delete_user": {
+            "endpoint": "/api/admin/users/delete",
+            "method": "DELETE",
+            "request": {
+                "id": "number",
+                "name": "string",
+                "email": "string",
+                "accountNumber": "number",
+                "balance": "number"
+            },
+            "response": null
+        },
+        "get_all_transactions": {
+            "endpoint": "/api/admin/transactions",
+            "method": "GET",
+            "request": null,
+            "response": [
+                {
+                    "id": "number",
+                    "transactionType": "string (Deposit|Withdrawal|Transfer)",
+                    "amount": "number",
+                    "description": "string",
+                    "timestamp": "string (ISO-8601)",
+                    "sender": {
+                        "id": "number",
+                        "accountNumber": "number"
+                    },
+                    "receiver": {
+                        "id": "number",
+                        "accountNumber": "number"
+                    }
+                }
+            ]
+        },
+        "reverse_transaction": {
+            "endpoint": "/api/admin/transactions/reverse",
+            "method": "POST",
+            "request": {
+                "id": "number",
+                "transactionType": "string",
+                "amount": "number",
+                "description": "string",
+                "timestamp": "string",
+                "sender": {
+                    "id": "number",
+                    "accountNumber": "number"
+                },
+                "receiver": {
+                    "id": "number",
+                    "accountNumber": "number"
+                }
+            },
+            "response": {
+                "id": "number",
+                "transactionType": "string",
+                "amount": "number",
+                "description": "string",
+                "timestamp": "string",
+                "sender": {
+                    "id": "number",
+                    "accountNumber": "number"
+                },
+                "receiver": {
+                    "id": "number",
+                    "accountNumber": "number"
+                }
+            }
+        }
+    }
+}
