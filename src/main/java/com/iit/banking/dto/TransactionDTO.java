@@ -10,8 +10,8 @@ public class TransactionDTO {
     private Double amount;
     private String description;
     private LocalDateTime timestamp;
-    private Long senderId;
-    private Long receiverId;
+    private SenderDTO sender;
+    private ReceiverDTO receiver;
 
     public TransactionDTO(Transaction transaction) {
         this.id = transaction.getId();
@@ -19,8 +19,8 @@ public class TransactionDTO {
         this.amount = transaction.getAmount();
         this.description = transaction.getDescription();
         this.timestamp = transaction.getTimestamp();
-        this.senderId = transaction.getSender() != null ? transaction.getSender().getId() : null;
-        this.receiverId = transaction.getReceiver() != null ? transaction.getReceiver().getId() : null;
+        this.sender = transaction.getSender() != null ? new SenderDTO(transaction.getSender()) : null;
+        this.receiver = transaction.getReceiver() != null ? new ReceiverDTO(transaction.getReceiver()) : null;
     }
 
     public Long getId() {
@@ -43,12 +43,12 @@ public class TransactionDTO {
         return timestamp;
     }
 
-    public Long getSenderId() {
-        return senderId;
+    public SenderDTO getSender() {
+        return sender;
     }
 
-    public Long getReceiverId() {
-        return receiverId;
+    public ReceiverDTO getReceiver() {
+        return receiver;
     }
 
     @Override
@@ -59,9 +59,60 @@ public class TransactionDTO {
                 ", amount=" + amount +
                 ", description='" + description + '\'' +
                 ", timestamp=" + timestamp +
-                ", senderId=" + senderId +
-                ", receiverId=" + receiverId +
+                ", sender=" + sender +
+                ", receiver=" + receiver +
                 '}';
     }
 
+    public static class SenderDTO {
+        private Long id;
+        private Long accountNumber;
+
+        public SenderDTO(com.iit.banking.model.entity.Account account) {
+            this.id = account.getId();
+            this.accountNumber = account.getAccountNumber();
+        }
+
+        public Long getId() {
+            return id;
+        }
+
+        public Long getAccountNumber() {
+            return accountNumber;
+        }
+
+        @Override
+        public String toString() {
+            return "SenderDTO{" +
+                    "id=" + id +
+                    ", accountNumber=" + accountNumber +
+                    '}';
+        }
+    }
+
+    public static class ReceiverDTO {
+        private Long id;
+        private Long accountNumber;
+
+        public ReceiverDTO(com.iit.banking.model.entity.Account account) {
+            this.id = account.getId();
+            this.accountNumber = account.getAccountNumber();
+        }
+
+        public Long getId() {
+            return id;
+        }
+
+        public Long getAccountNumber() {
+            return accountNumber;
+        }
+
+        @Override
+        public String toString() {
+            return "ReceiverDTO{" +
+                    "id=" + id +
+                    ", accountNumber=" + accountNumber +
+                    '}';
+        }
+    }
 }

@@ -14,6 +14,7 @@ import com.iit.banking.dto.AdminRequestDTO;
 import com.iit.banking.dto.AdminUpdateDTO;
 import com.iit.banking.dto.PasswordUpdateDTO;
 import com.iit.banking.dto.UserDTO;
+import com.iit.banking.dto.TransactionDTO;
 import com.iit.banking.model.entity.Admin;
 import com.iit.banking.model.entity.Transaction;
 import com.iit.banking.model.entity.User;
@@ -155,11 +156,23 @@ public class AdminService {
         userRepository.delete(user);
     }
 
-    public List<Transaction> getAllTransactions() {
-        return transactionRepository.findAll();
+    public List<TransactionDTO> getAllTransactions() {
+        logger.info("Fetching all transactions");
+        try {
+            List<Transaction> transactions = transactionRepository.findAll();
+            logger.info("Found {} transactions", transactions.size());
+            List<TransactionDTO> transactionDTOs = transactions.stream()
+                    .map(TransactionDTO::new)
+                    .collect(Collectors.toList());
+            logger.info("Successfully converted transactions to DTOs");
+            return transactionDTOs;
+        } catch (Exception e) {
+            logger.error("Error fetching transactions: ", e);
+            throw e;
+        }
     }
 
-    public Transaction reverseTransaction(Transaction transaction) {
+    public TransactionDTO reverseTransaction(Transaction transaction) {
         // Create a new transaction with reversed amounts
         Transaction reversedTransaction = new Transaction();
         reversedTransaction.setAmount(transaction.getAmount());
@@ -169,6 +182,7 @@ public class AdminService {
         reversedTransaction.setSender(transaction.getReceiver());
         reversedTransaction.setReceiver(transaction.getSender());
 
-        return transactionRepository.save(reversedTransaction);
+        Transaction savedTransaction = transactionRepository.save(reversedTransaction);
+        return new TransactionDTO(savedTransaction);
     }
 }

@@ -91,15 +91,15 @@ public class AdminController {
 
     @GetMapping("/transactions")
     @Operation(summary = "Get all transactions", description = "Retrieves a list of all transactions")
-    public ResponseEntity<List<Transaction>> getAllTransactions() {
-        List<Transaction> transactions = adminService.getAllTransactions();
+    public ResponseEntity<List<TransactionDTO>> getAllTransactions() {
+        List<TransactionDTO> transactions = adminService.getAllTransactions();
         return ResponseEntity.ok(transactions);
     }
 
     @PostMapping("/transactions/reverse")
     @Operation(summary = "Reverse transaction", description = "Reverses a specific transaction")
-    public ResponseEntity<Transaction> reverseTransaction(@RequestBody Transaction transaction) {
-        Transaction reversedTransaction = adminService.reverseTransaction(transaction);
+    public ResponseEntity<TransactionDTO> reverseTransaction(@RequestBody Transaction transaction) {
+        TransactionDTO reversedTransaction = adminService.reverseTransaction(transaction);
         return ResponseEntity.ok(reversedTransaction);
     }
 }
