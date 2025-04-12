@@ -1,6 +1,8 @@
 package com.iit.banking.controller;
 
 import java.util.List;
+import java.util.Map;
+import java.util.HashMap;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -35,10 +37,21 @@ public class UserController {
                         @ApiResponse(responseCode = "409", description = "User already exists")
         })
         @PostMapping("/register")
-        public ResponseEntity<UserDTO> registerUser(
+        public ResponseEntity<Map<String, Object>> registerUser(
                         @Parameter(description = "User registration request", required = true) @RequestBody UserRequestDTO userRequest) {
-                UserDTO user = userService.addUser(userRequest);
-                return ResponseEntity.ok(user);
+                try {
+                        UserDTO user = userService.addUser(userRequest);
+                        Map<String, Object> response = new HashMap<>();
+                        response.put("status", "REGISTRATION_SUCCESS");
+                        response.put("message", "User registered successfully");
+                        response.put("user", user);
+                        return ResponseEntity.ok(response);
+                } catch (IllegalArgumentException e) {
+                        Map<String, Object> response = new HashMap<>();
+                        response.put("status", "ERROR");
+                        response.put("message", e.getMessage());
+                        return ResponseEntity.badRequest().body(response);
+                }
         }
 
         @Operation(summary = "Get all users", description = "Retrieve a list of all users")

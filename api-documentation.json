@@ -58,11 +58,15 @@
                 "balance": "number (optional)"
             },
             "response": {
-                "id": "number",
-                "name": "string",
-                "email": "string",
-                "accountNumber": "number",
-                "balance": "number"
+                "status": "REGISTRATION_SUCCESS",
+                "message": "User registered successfully",
+                "user": {
+                    "id": 1,
+                    "name": "John Doe",
+                    "email": "john@example.com",
+                    "accountNumber": 123456,
+                    "balance": 0.0
+                }
             }
         },
         "get_all": {
