@@ -1,6 +1,8 @@
 package com.iit.banking.controller;
 
 import java.util.List;
+import java.util.Map;
+import java.util.HashMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -84,9 +86,12 @@ public class AdminController {
 
     @DeleteMapping("/users/delete")
     @Operation(summary = "Delete user", description = "Deletes a user account")
-    public ResponseEntity<Void> deleteUser(@RequestBody UserDTO userDTO) {
+    public ResponseEntity<Map<String, String>> deleteUser(@RequestBody UserDTO userDTO) {
         adminService.deleteUser(userDTO);
-        return ResponseEntity.ok().build();
+        Map<String, String> response = new HashMap<>();
+        response.put("status", "success");
+        response.put("message", "User deleted successfully");
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/transactions")
