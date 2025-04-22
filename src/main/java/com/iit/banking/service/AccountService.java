@@ -1,10 +1,9 @@
 package com.iit.banking.service;
 
 import org.springframework.stereotype.Service;
-import org.springframework.http.HttpStatus;
-import org.springframework.web.server.ResponseStatusException;
 
 import com.iit.banking.dto.AccountDTO;
+import com.iit.banking.exceptions.AccountException;
 import com.iit.banking.repository.AccountRepository;
 import com.iit.banking.model.entity.Account;
 
@@ -19,13 +18,13 @@ public class AccountService {
 
     public AccountDTO getAccountByAccountNumber(Long accountNumber) {
         Account account = accountRepository.findByAccountNumber(accountNumber)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Account not found"));
+                .orElseThrow(() -> AccountException.accountNotFound(accountNumber));
         return new AccountDTO(account);
     }
 
     public double getBalanceByAccountNumber(Long accountNumber) {
         Account account = accountRepository.findByAccountNumber(accountNumber)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Account not found"));
+                .orElseThrow(() -> AccountException.accountNotFound(accountNumber));
         return account.getBalance();
     }
 }

@@ -3,14 +3,15 @@ package com.iit.banking.service;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.iit.banking.dto.TransactionDTO;
+import com.iit.banking.exceptions.AccountException;
+import com.iit.banking.exceptions.TransactionException;
 import com.iit.banking.model.entity.Account;
 import com.iit.banking.model.entity.Transaction;
 import com.iit.banking.repository.AccountRepository;
 import com.iit.banking.repository.TransactionRepository;
-
-import jakarta.transaction.Transactional;
 
 @Service
 public class TransactionService {
@@ -30,8 +31,12 @@ public class TransactionService {
 
     @Transactional
     public TransactionDTO deposit(Long accountId, Double amount) {
+        if (amount <= 0) {
+            throw TransactionException.invalidAmount();
+        }
+
         Account account = accountRepository.findByAccountNumber(accountId)
-                .orElseThrow(() -> new RuntimeException("Account not found"));
+                .orElseThrow(() -> AccountException.accountNotFound(accountId));
         account.setBalance(account.getBalance() + amount);
         accountRepository.save(account);
         Transaction transaction = new Transaction("Deposit", amount, "Deposit to account", null, account);
@@ -41,10 +46,14 @@ public class TransactionService {
 
     @Transactional
     public TransactionDTO withdraw(Long accountId, Double amount) {
+        if (amount <= 0) {
+            throw TransactionException.invalidAmount();
+        }
+
         Account account = accountRepository.findByAccountNumber(accountId)
-                .orElseThrow(() -> new RuntimeException("Account not found"));
+                .orElseThrow(() -> AccountException.accountNotFound(accountId));
         if (account.getBalance() < amount) {
-            throw new Error("Insufficient balance");
+            throw AccountException.insufficientBalance();
         }
         account.setBalance(account.getBalance() - amount);
         accountRepository.save(account);
@@ -55,13 +64,19 @@ public class TransactionService {
 
     @Transactional
     public TransactionDTO transfer(Long senderId, Long receiverId, Double amount) {
-        Account sender = accountRepository.findByAccountNumber(senderId)
-                .orElseThrow(() -> new RuntimeException("Sender account not found"));
-        Account receiver = accountRepository.findByAccountNumber(receiverId)
-                .orElseThrow(() -> new RuntimeException("Receiver account not found"));
-        if (sender.getBalance() < amount) {
-            throw new Error("Insufficient balance");
+        if (amount <= 0) {
+            throw TransactionException.invalidAmount();
         }
+
+        Account sender = accountRepository.findByAccountNumber(senderId)
+                .orElseThrow(() -> AccountException.accountNotFound(senderId));
+        Account receiver = accountRepository.findByAccountNumber(receiverId)
+                .orElseThrow(() -> AccountException.accountNotFound(receiverId));
+
+        if (sender.getBalance() < amount) {
+            throw AccountException.insufficientBalance();
+        }
+
         sender.setBalance(sender.getBalance() - amount);
         receiver.setBalance(receiver.getBalance() + amount);
         accountRepository.save(sender);

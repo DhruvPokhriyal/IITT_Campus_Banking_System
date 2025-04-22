@@ -11,14 +11,14 @@ import com.iit.banking.dto.PasswordUpdateDTO;
 import com.iit.banking.dto.UserDTO;
 import com.iit.banking.dto.UserRequestDTO;
 import com.iit.banking.dto.UserUpdateDTO;
+import com.iit.banking.exceptions.AccountException;
+import com.iit.banking.exceptions.UserException;
 import com.iit.banking.model.entity.Account;
 import com.iit.banking.model.entity.User;
 import com.iit.banking.repository.AccountRepository;
 import com.iit.banking.repository.UserRepository;
 
 import jakarta.transaction.Transactional;
-import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.ResponseStatus;
 
 @Service
 public class UserService {
@@ -39,26 +39,27 @@ public class UserService {
             // Validate passwords match
             if (!userRequest.getPassword().equals(userRequest.getConfirmPassword())) {
                 logger.warn("Password confirmation failed for email: {}", userRequest.getEmail());
-                throw new IllegalArgumentException("Passwords do not match");
+                throw UserException.passwordsDoNotMatch();
             }
 
             // Check if user already exists
             if (userRepository.findByEmail(userRequest.getEmail()).isPresent()) {
                 logger.warn("User already exists with email: {}", userRequest.getEmail());
-                throw new IllegalArgumentException("Account already exists with this email");
+                throw UserException.emailExists(userRequest.getEmail());
             }
 
             // Check if account number already exists
             if (accountRepository.findByAccountNumber(userRequest.getAccountNumber()).isPresent()) {
                 logger.warn("Account number already exists: {}", userRequest.getAccountNumber());
-                throw new IllegalArgumentException("Account number already exists");
+                throw new AccountException("ACC_003",
+                        "Account number already exists: " + userRequest.getAccountNumber());
             }
 
             // Create and save user
             User user = new User();
             user.setName(userRequest.getName());
             user.setEmail(userRequest.getEmail());
-            user.setPassword(userRequest.getPassword()); // Store plain text password
+            user.setPassword(userRequest.getPassword());
             User savedUser = userRepository.save(user);
             logger.debug("User created successfully with email: {}", userRequest.getEmail());
 
@@ -71,7 +72,7 @@ public class UserService {
             logger.debug("Account created successfully for user: {}", userRequest.getEmail());
 
             return new UserDTO(savedUser);
-        } catch (IllegalArgumentException e) {
+        } catch (UserException e) {
             logger.error("Validation error during user creation: {}", e.getMessage());
             throw e;
         } catch (Exception e) {
@@ -89,19 +90,19 @@ public class UserService {
     public UserDTO getUserById(Long id) {
         return userRepository.findById(id)
                 .map(UserDTO::new)
-                .orElseThrow(() -> new IllegalArgumentException("User not found with ID: " + id));
+                .orElseThrow(() -> UserException.userNotFound(id));
     }
 
     public UserDTO getUserByEmail(String email) {
         return userRepository.findByEmail(email)
                 .map(UserDTO::new)
-                .orElseThrow(() -> new IllegalArgumentException("User not found with email: " + email));
+                .orElseThrow(() -> UserException.userNotFound(email));
     }
 
     @Transactional
     public void updateName(UserUpdateDTO userUpdate) {
         User user = userRepository.findByEmail(userUpdate.getEmail())
-                .orElseThrow(() -> new IllegalArgumentException("User not found with email: " + userUpdate.getEmail()));
+                .orElseThrow(() -> UserException.userNotFound(userUpdate.getEmail()));
         user.setName(userUpdate.getName());
         userRepository.save(user);
     }
@@ -109,21 +110,20 @@ public class UserService {
     @Transactional
     public void updatePassword(PasswordUpdateDTO passwordUpdate) {
         User user = userRepository.findByEmail(passwordUpdate.getEmail())
-                .orElseThrow(
-                        () -> new IllegalArgumentException("User not found with email: " + passwordUpdate.getEmail()));
+                .orElseThrow(() -> UserException.userNotFound(passwordUpdate.getEmail()));
 
         if (!passwordUpdate.getOldPassword().equals(user.getPassword())) {
-            throw new IllegalArgumentException("Old password is incorrect");
+            throw UserException.incorrectPassword();
         }
 
-        user.setPassword(passwordUpdate.getNewPassword()); // Store plain text password
+        user.setPassword(passwordUpdate.getNewPassword());
         userRepository.save(user);
     }
 
     @Transactional
     public void deleteUser(UserDTO user) {
         if (!userRepository.existsByEmail(user.getEmail())) {
-            throw new IllegalArgumentException("User not found with email: " + user.getEmail());
+            throw UserException.userNotFound(user.getEmail());
         }
         userRepository.deleteByEmail(user.getEmail());
     }

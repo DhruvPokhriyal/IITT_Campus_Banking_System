@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import com.iit.banking.dto.LoginRequestDTO;
 import com.iit.banking.dto.LoginResponseDTO;
 import com.iit.banking.dto.UserDTO;
+import com.iit.banking.exceptions.AuthenticationException;
 import com.iit.banking.model.entity.Admin;
 import com.iit.banking.model.entity.User;
 import com.iit.banking.repository.AdminRepository;
@@ -24,11 +25,11 @@ public class AuthService {
     public LoginResponseDTO login(LoginRequestDTO loginRequest) {
         // Find user by email
         User user = userRepository.findByEmail(loginRequest.getEmail())
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> AuthenticationException.userNotFound(loginRequest.getEmail()));
 
         // Check password (plain text comparison)
         if (!loginRequest.getPassword().equals(user.getPassword())) {
-            throw new RuntimeException("Invalid credentials");
+            throw AuthenticationException.invalidCredentials();
         }
 
         // Return success message with user data
@@ -38,11 +39,11 @@ public class AuthService {
     public LoginResponseDTO adminLogin(LoginRequestDTO loginRequest) {
         // Find admin by email
         Admin admin = adminRepository.findByEmail(loginRequest.getEmail())
-                .orElseThrow(() -> new RuntimeException("Admin not found"));
+                .orElseThrow(() -> AuthenticationException.userNotFound(loginRequest.getEmail()));
 
         // Check password (plain text comparison)
         if (!loginRequest.getPassword().equals(admin.getPassword())) {
-            throw new RuntimeException("Invalid credentials");
+            throw AuthenticationException.invalidCredentials();
         }
 
         // Return success message with admin data
