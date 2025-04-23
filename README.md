@@ -1,163 +1,130 @@
 # IIT Banking System
 
-A full-stack banking application built with Spring Boot and React, providing a secure and efficient platform for managing bank accounts, transactions, and user administration.
+[![Java Version](https://img.shields.io/badge/Java-21-orange)](https://www.oracle.com/java/)
+[![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.2.3-brightgreen)](https://spring.io/projects/spring-boot)
+[![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
-## Features
+A robust and secure banking management system designed specifically for the IIT campus community. This system provides a comprehensive solution for managing financial transactions, accounts, and banking operations within the campus environment.
 
-### User Features
+## 🚀 Features
 
--   User registration and authentication
--   Account management
--   View account balance
--   Deposit and withdrawal operations
--   Fund transfers between accounts
--   Transaction history
+-   **Secure Authentication & Authorization**
 
-### Admin Features
+    -   JWT-based authentication
+    -   Role-based access control
+    -   Secure password handling
 
--   Admin registration and authentication
--   User management (view, delete users)
--   Transaction management
--   Transaction reversal capability
--   System monitoring
+-   **Account Management**
 
-## Tech Stack
+    -   Account creation and maintenance
+    -   Balance tracking
+    -   Transaction history
 
-### Backend
+-   **Transaction Services**
 
--   Java 17
--   Spring Boot 3.x
--   Spring Security with JWT
--   PostgreSQL
--   Hibernate/JPA
--   OpenAPI/Swagger documentation
--   Maven
+    -   Fund transfers
+    -   Payment processing
+    -   Transaction logging and monitoring
 
-### Frontend
+-   **Security Features**
+    -   Encrypted data transmission
+    -   Secure session management
+    -   Input validation and sanitization
 
--   React
--   TypeScript
--   Material-UI
--   Axios for API calls
--   React Router for navigation
--   Context API for state management
+## 🛠️ Tech Stack
 
-## Prerequisites
+-   **Backend Framework:** Spring Boot 3.2.3
+-   **Programming Language:** Java 21
+-   **Database:** PostgreSQL
+-   **Security:** Spring Security, JWT
+-   **API Documentation:** OpenAPI (Springdoc)
+-   **Build Tool:** Maven
+-   **Additional Libraries:**
+    -   Lombok for boilerplate reduction
+    -   Hibernate Validator for data validation
+    -   Spring Data JPA for database operations
 
--   Java 17 or higher
--   Node.js 16 or higher
--   PostgreSQL 14 or higher
--   Maven 3.8 or higher
+## 📋 Prerequisites
 
-## Installation
+-   Java Development Kit (JDK) 21
+-   Maven 3.6+
+-   PostgreSQL 12+
+-   Your favorite IDE (IntelliJ IDEA recommended)
 
-### Backend Setup
+## 🔧 Setup & Installation
 
-1. Clone the repository:
+1. **Clone the repository**
 
-```bash
-git clone https://github.com/yourusername/iit-banking-system.git
-cd iit-banking-system
-```
+    ```bash
+    git clone https://github.com/yourusername/iit-banking-system.git
+    cd iit-banking-system
+    ```
 
-2. Configure the database:
+2. **Configure PostgreSQL**
 
--   Create a PostgreSQL database named `iit_banking`
--   Update the database credentials in `src/main/resources/application.properties`
+    - Create a new database
+    - Update database credentials in `application.properties`
 
-3. Build and run the backend:
+3. **Build the project**
 
-```bash
-mvn clean install
-mvn spring-boot:run
-```
+    ```bash
+    mvn clean install
+    ```
 
-The backend will start on `http://localhost:8080`
+4. **Run the application**
+    ```bash
+    mvn spring-boot:run
+    ```
 
-### Frontend Setup
+The application will be available at `http://localhost:8080`
 
-1. Navigate to the frontend directory:
-
-```bash
-cd frontend
-```
-
-2. Install dependencies:
-
-```bash
-npm install
-```
-
-3. Start the development server:
-
-```bash
-npm start
-```
-
-The frontend will start on `http://localhost:3000`
-
-## API Documentation
-
-The API documentation is available at `http://localhost:8080/swagger-ui.html` when the backend is running.
-
-For detailed API documentation, refer to `api-documentation.json` in the project root.
-
-## Project Structure
+## 📁 Project Structure
 
 ```
-iit-banking-system/
-├── src/
-│   ├── main/
-│   │   ├── java/
-│   │   │   └── com/iit/banking/
-│   │   │       ├── config/         # Configuration classes
-│   │   │       ├── controller/     # REST controllers
-│   │   │       ├── dto/           # Data Transfer Objects
-│   │   │       ├── model/         # Entity models
-│   │   │       ├── repository/    # JPA repositories
-│   │   │       ├── service/       # Business logic
-│   │   │       └── util/          # Utility classes
-│   │   └── resources/
-│   │       ├── application.properties
-│   │       └── schema.sql
-│   └── test/                      # Test classes
-├── frontend/                      # React frontend
-├── api-documentation.json         # API documentation
-└── pom.xml                        # Maven configuration
+src/main/java/com/iit/banking/
+├── config/          # Configuration classes
+├── controller/      # REST API controllers
+├── dto/            # Data Transfer Objects
+├── exceptions/     # Custom exception handlers
+├── model/          # Entity classes
+├── repository/     # Data access layer
+├── service/        # Business logic layer
+└── enums/          # Enumeration classes
 ```
 
-## Security Features
+## 🔍 API Documentation
 
--   JWT-based authentication
--   Password encryption
--   Role-based access control
--   CORS configuration
--   Input validation
--   SQL injection prevention
+The API documentation is available through Swagger UI when the application is running:
 
-## Database Schema
+-   Swagger UI: `http://localhost:8080/swagger-ui.html`
+-   OpenAPI JSON: `http://localhost:8080/v3/api-docs`
 
-The application uses the following main tables:
+## 🤝 Contributing
 
--   `admins`: Stores admin user information
--   `users`: Stores regular user information
--   `accounts`: Stores bank account details
--   `transactions`: Records all financial transactions
-
-## Contributing
+We welcome contributions to the IIT Banking System! Please follow these steps:
 
 1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add some amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
+2. Create a feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
 
-## License
+## 📜 License
 
-This project is licensed under the MIT License - see the LICENSE file for details.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## Acknowledgments
+## 🙏 Acknowledgments
 
--   Spring Boot team for the amazing framework
--   React team for the frontend library
--   All contributors and maintainers
+-   IIT Campus Administration for their support
+-   All contributors who have helped shape this project
+
+## 📞 Contact
+
+For any queries or support, please contact:
+
+-   Project Maintainer: [Your Name](mailto:your.email@example.com)
+-   IIT Banking Support: [support@iitbanking.com](mailto:support@iitbanking.com)
+
+---
+
+⭐️ Star this repository if you find it helpful!
